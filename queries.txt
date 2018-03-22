@@ -1,0 +1,6 @@
+#1. # of Repositories by License Type
+MATCH (n:License)-[]-(r:Repo) RETURN n.name,count(r) 
+
+#2. # of Repos by Org, ordered descending
+MATCH (o:Organisation)-[]-(r:Repo) RETURN o.name as Repository,count(r) as TotalRepos order by TotalRepos desc
+
