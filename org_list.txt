@@ -1,12 +1,8 @@
-Abra
-AlphaPoint
 Anoncoin
 Ardor
 AsicCoin
 Atencoin
 Auroracoin
-Azure
-Bitcoin
 Bitfoo
 BitFury
 Bitmark
@@ -38,7 +34,6 @@ Earthport
 Ekrona
 Emercoin
 Epiphyte
-Ethereum
 Fastcoin
 Feathercoin
 Freicoin
@@ -60,7 +55,6 @@ Megacoin
 Midascoins
 Mincoin
 Monax
-Monero
 MonetaryUnit
 Multichain
 MyriadCoin

@@ -4,3 +4,5 @@ MATCH (n:License)-[]-(r:Repo) RETURN n.name,count(r)
 #2. # of Repos by Org, ordered descending
 MATCH (o:Organisation)-[]-(r:Repo) RETURN o.name as Repository,count(r) as TotalRepos order by TotalRepos desc
 
+#3. 
+MATCH p=(d:DataInput)<-[]-(o:Organisation)-[]-(r:Repo)-[]-(u:User) WHERE d.CreatedOn='18-03-26' RETURN o.name,r.name,u.name,u.avatar_url,u.blog,u.company,u.contributions,u.followers,u.following,u.html_url,u.public_repos

@@ -1,0 +1,174 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://getbootstrap.com/favicon.ico">
+
+    <title>Ocouran</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="https://getbootstrap.com/dist/css/album.css" rel="stylesheet">
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['treemap']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable({{df1|safe}});
+    
+        tree = new google.visualization.TreeMap(document.getElementById('chart_div'));
+
+        var options = {
+        highlightOnMouseOver: true,
+        maxDepth: 1,
+        maxPostDepth: 2,
+        minHighlightColor: '#8c6bb1',
+        midHighlightColor: '#9ebcda',
+        maxHighlightColor: '#edf8fb',
+        minColor: '#009688',
+        midColor: '#f7f7f7',
+        maxColor: '#ee8100',
+        headerHeight: 15,
+        showScale: true,
+        height: 500,
+        useWeightedAverageForAggregation: true,
+        generateTooltip: showFullTooltip
+      };
+
+        tree.draw(data, options);
+
+      
+
+       function showFullTooltip(row, size, value) {
+    return '<div style="background:#fd9; padding:10px; border-style:solid">' +
+           '<span style="font-family:Courier"><b>' + data.getValue(row, 0) +
+           '</b>, ' + data.getValue(row, 1) + ', ' + data.getValue(row, 2) +
+           ', ' + data.getValue(row, 3) + '</span><br>' +
+           'Datatable row: ' + row + '<br>' +
+       data.getColumnLabel(2) +
+           ' (total value of this cell and its children): ' + size + '<br>' +
+       data.getColumnLabel(3) + ': ' + value + ' </div>';
+  }
+
+} 
+
+    </script>
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-8 col-md-7 py-4">
+              <h4 class="text-white">About</h4>
+              <p class="text-muted">We aggregate hard data from Github to correlate Project code, contributors and activity with intangibles like community, value and valuation.</p>
+            </div>
+            <div class="col-sm-4 offset-md-1 py-4">
+              <h4 class="text-white">Contact</h4>
+              <ul class="list-unstyled">
+                <li><a href="#" class="text-white">Connect on LinkedIn</a></li>
+                <li><a href="#" class="text-white">Github</a></li>
+                <li><a href="#" class="text-white">Email me</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+          <a href="#" class="navbar-brand d-flex align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            <strong>BlockChain Projects</strong>
+          </a>
+          <a href="{{url_for('Oauth.tags')}}" class="navbar-brand d-flex align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            <strong>Tags</strong>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main role="main">
+
+      <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">Blockchain Projects</h1>
+          <p class="lead text-muted">This is an overview of current blockchain projects, organised by number of contributors.</p>
+          <p><!--
+            <a href="#" class="btn btn-primary my-2">Main call to action</a>
+            <a href="#" class="btn btn-secondary my-2">Secondary action</a> -->
+            <div id="chart_div" style="width: 1120px; height: 500px;"></div> 
+          </p>
+        </div>
+      </section>
+
+      <div class="container col-md-8 bg-light">
+       <!-- <h2>Table Title</h2> -->
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Link</th>
+                  <th>Project</th>
+                  <th>Contributors</th>
+                  <th>Github Repos</th>
+                  <th>Codebase size</th>
+                  <th>Written In</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for values in data: %}
+                <tr>
+                  <td class="align-middle">{{loop.index}}</td>  
+                  <td class="align-middle"><a href="/Organisation/{{ values['o.name']}}" class="btn btn-sm btn-outline-secondary">Details</a></td>
+                  <td><h5>{{ values['o.name'] }}</h5></td>
+                  <td class="align-middle">{{ values['NumOfContributors']}}</td>
+                  <td class="align-middle">{{ values['NumOfRepos'] }}</td>
+                  <td class="align-middle">{{ values['Size']|filesizeformat()}}</td>
+                  <td class="align-middle">{{ values['WrittenIn']}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          </div>
+
+
+
+    </main>
+
+    <footer class="text-muted">
+      <div class="container">
+        <p class="float-right">
+          <a href="#">Back to top</a>
+        </p>
+        <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+        <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"><\/script>')</script>
+    <script src="https://getbootstrap.com/assets/js/vendor/popper.min.js"></script>
+    <script src="https://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <script src="https://getbootstrap.com/assets/js/vendor/holder.min.js"></script>
+  </body>
+</html>
+
